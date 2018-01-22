@@ -57,10 +57,10 @@ class HttpClient {
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/xml' ) );
 		curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT_MS, $this->connectTimeout );
 		curl_setopt( $ch, CURLOPT_TIMEOUT_MS, $this->socketTimeout );
-
-		if ( $onlyAllowHttps === false ) {
-			curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		}
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
 		$responseXml = curl_exec( $ch );
 		$statusCode  = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
