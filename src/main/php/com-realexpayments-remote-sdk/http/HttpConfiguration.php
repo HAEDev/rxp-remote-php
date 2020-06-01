@@ -33,6 +33,12 @@ class HttpConfiguration {
 	/** Whether only HTTPS is allowed for the endpoint. */
 	private $onlyAllowHttps = true;
 
+    /**
+     * Proxy URL
+     * @var string
+     */
+    public $proxyUrl;
+
 
 	/**
 	 * Create a HttpConfiguration object with all defaults in place.

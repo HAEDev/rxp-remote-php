@@ -38,11 +38,11 @@ class HttpClient {
 
 	/**
 	 * @param HttpRequest $httpRequest
-	 * @param boolean $onlyAllowHttps
-	 *
+	 * @param boolean $onlyAllowHttps (optional - default: TRUE)
+     * @param string $proxyUrl (optional)
 	 * @return HttpResponse
 	 */
-	public function execute( $httpRequest, $onlyAllowHttps = true ) {
+	public function execute( $httpRequest, $onlyAllowHttps = true, $proxyUrl = null ) {
 
 		$url  = $httpRequest->getUrl();
 		$post = $httpRequest->getMethod() == HttpRequest::METH_POST ? 1 : 0;
@@ -61,6 +61,10 @@ class HttpClient {
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+        if ($proxyUrl) {
+            curl_setopt($ch, CURLOPT_PROXY, $proxyUrl);
+        }
 
 		$responseXml = curl_exec( $ch );
 		$statusCode  = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
